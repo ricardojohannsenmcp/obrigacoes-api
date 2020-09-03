@@ -44,7 +44,7 @@ public class EventoProcesso {
 	private String observacao;
 	
 	@ManyToOne
-	@JoinColumn(name="evento_pai_id")
+	@JoinColumn(name="evento_pai_id",nullable=true)
 	private EventoProcesso eventoProcesso;
 	
 	@OneToMany(mappedBy="eventoProcesso")

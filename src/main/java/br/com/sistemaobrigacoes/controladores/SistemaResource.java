@@ -42,12 +42,7 @@ public class SistemaResource {
 		List<Sistema> sistemas =  (List<Sistema>) sistemaRepository.findAll();
 		return ResponseEntity.ok(sistemas);
 	}
-	
-	@GetMapping("/{sistemaId}")
-	public ResponseEntity<Sistema> editar(@PathVariable("sistemaId") Integer sistemaId) {
-		Sistema sistema = sistemaRepository.findById(sistemaId).orElse(null);
-		return ResponseEntity.ok(sistema);
-	}
+
 	
 	@ResponseStatus(value=HttpStatus.OK)
 	@DeleteMapping("/{sistemaId}")

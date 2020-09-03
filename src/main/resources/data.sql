@@ -1,3 +1,25 @@
+insert into grupo_usuario(1,'Administrador');
+insert into grupo_usuario(2,'Coordenador');
+insert into grupo_usuario(3,'Contador');
+
+
+insert into permissao(1,'Módulo Processo');
+insert into permissao(2,'Módulo Obrigações');
+
+
+insert into grupo_permissao(grupo_usuario_id,permissao_id) values (1,1);
+insert into grupo_permissao(grupo_usuario_id,permissao_id) values (1,2);
+
+insert into grupo_permissao(grupo_usuario_id,permissao_id) values (2,1);
+insert into grupo_permissao(grupo_usuario_id,permissao_id) values (2,2);
+
+
+insert into grupo_permissao(grupo_usuario_id,permissao_id) values (3,1);
+insert into grupo_permissao(grupo_usuario_id,permissao_id) values (3,2);
+
+
+
+
 insert into tipo_evento_processo(tipo_evento_processo_id,descricao) values (1,'Rit inicial');
 insert into tipo_evento_processo(tipo_evento_processo_id,descricao) values (2,'Pedido de prorrogação de prazo');
 insert into tipo_evento_processo(tipo_evento_processo_id,descricao) values (3,'Defesa');

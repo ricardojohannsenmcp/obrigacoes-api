@@ -7,35 +7,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
-@Table(name="usuario")
+@Table(name="usuario_grupo")
 @Data
-public class Usuario {
+public class UsuarioGrupo {
 	
 	@Id
-	@Column(name="usuario_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer usuarioId;
+	@Column(name="usuario_grupo_id")
+	private Integer usuarioGrupoId;
 	
 	@ManyToOne
-	@JoinColumn(name="tipo_usuario_id")
-	private GrupoUsuario tipoUsuario;
+	@JoinColumn(name= "usuario_id")
+	private Usuario usuario;
 	
 	@ManyToOne
-	@JoinColumn(name="ente")
+	@JoinColumn(name= "usuario_id")
+	private GrupoUsuario grupoUsuario;
+	
+	@ManyToOne
+	@JoinColumn(name= "ente_id")
 	private Ente ente;
 	
-    @OneToOne
-    @JoinColumn(name="pessoa")
-	private Pessoa pessoa;
-	
-	private String login;
-	
-	private String senha;
+	private boolean inativo;
 
 }

@@ -10,15 +10,15 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="tipo_usuario")
+@Table(name="tipo_tarefa")
 @Data
-public class TipoUsuario {
+public class TipoTarefa {
 	
 	@Id
-	@Column(name="tipo_usuario_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer tipoUsuarioId;
+	@Column(name="tipo_tarefa_id")
+	private Integer tipoTarefaId;
 	
-	private String nome;
-
+	private String descricao;
+	
 }

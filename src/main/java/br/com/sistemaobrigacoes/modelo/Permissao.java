@@ -10,15 +10,14 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="tipo_evento_processo")
+@Table(name="permissao")
 @Data
-public class TipoEventoProcesso {
+public class Permissao {
 	
 	@Id
+	@Column(name="permissao_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="tipo_evento_processo_id")
-	private Integer tipoEventoProcessoId;
-	
+	private Integer permissaoId;
 	private String descricao;
 
 }

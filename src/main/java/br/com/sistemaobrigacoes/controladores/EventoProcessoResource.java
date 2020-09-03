@@ -33,42 +33,38 @@ import br.com.sistemaobrigacoes.repositorios.EventoProcessoRepository;
 @RestController
 @RequestMapping("/eventoProcessos")
 public class EventoProcessoResource {
-	
+
 	@Autowired
 	private EventoProcessoRepository eventoProcessoRepository;
-	
+
 	@Autowired
 	private ArquivoEventoProcessoRepository arquivoEventoProcessoRepository;
-	
+
+
 	@PostMapping
 	public ResponseEntity<EventoProcesso> salvar(@RequestBody EventoProcesso eventoProcesso) {
 		eventoProcesso =  eventoProcessoRepository.save(eventoProcesso);
 		return ResponseEntity.ok(eventoProcesso);
 	}
-	
+
 	@GetMapping("/{eventoProcessoId}")
 	public ResponseEntity<EventoProcesso> find(@PathVariable("eventoProcessoId") Integer eventoProcessoId){
 		return ResponseEntity.ok(eventoProcessoRepository.findById(eventoProcessoId).orElse(null));
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<EventoProcesso>> lista(){
 		List<EventoProcesso> eventoProcessos =  (List<EventoProcesso>) eventoProcessoRepository.findAll();
 		return ResponseEntity.ok(eventoProcessos);
 	}
-	
-	@GetMapping("/{eventoProcessoId}")
-	public ResponseEntity<EventoProcesso> editar(@PathVariable("eventoProcessoId") Integer eventoProcessoId) {
-		EventoProcesso eventoProcesso = eventoProcessoRepository.findById(eventoProcessoId).orElse(null);
-		return ResponseEntity.ok(eventoProcesso);
-	}
-	
+
+
 	@ResponseStatus(value=HttpStatus.OK)
 	@DeleteMapping("/{eventoProcessoId}")
 	public void remover(@PathVariable("eventoProcessoId") Integer eventoProcessoId) {
 		eventoProcessoRepository.deleteById(eventoProcessoId);
 	}
-	
+
 	@ResponseStatus(value=HttpStatus.OK)
 	@PutMapping("/{eventoProcessoId}")
 	public void atualizar(@PathVariable("eventoProcessoId") Integer eventoProcessoId,@RequestBody EventoProcesso eventoProcesso) {
@@ -76,15 +72,15 @@ public class EventoProcessoResource {
 		BeanUtils.copyProperties(eventoProcesso, eventoProcessoToUpdate, "eventoProcessoId");
 		eventoProcessoRepository.save(eventoProcessoToUpdate);
 	}
-	
+
 	@ResponseStatus(value=HttpStatus.OK)
 	@PostMapping("{eventoProcessoId}/upload")
 	public void upload(@PathVariable("eventoProcessoId")Integer eventoProcessoId,@RequestParam("file") MultipartFile file,
-		@RequestParam("descricao") String descricao) {
+			@RequestParam("descricao") String descricao) {
 		try {
 			String time = String.valueOf(new Date().getTime());
 			byte[] bytes = file.getBytes();
-            Path path = Paths.get("/FEMABA/"+time+"_"+file.getOriginalFilename());
+			Path path = Paths.get("/FEMABA/"+time+"_"+file.getOriginalFilename());
 			Files.write(path,bytes);
 			String nomeOriginal =  file.getOriginalFilename();
 			String contentType =  file.getContentType();
@@ -92,8 +88,8 @@ public class EventoProcessoResource {
 			EventoProcesso eventoProcesso = eventoProcessoRepository.findById(eventoProcessoId).orElse(null);
 			eventoProcesso.setEventoProcessoId(eventoProcessoId);
 			String extensao = Optional.ofNullable(file.getOriginalFilename())
-		      .filter(f -> f.contains("."))
-		      .map(f -> f.substring(file.getOriginalFilename().lastIndexOf(".") + 1)).get();
+					.filter(f -> f.contains("."))
+					.map(f -> f.substring(file.getOriginalFilename().lastIndexOf(".") + 1)).get();
 			String fileName =  time+"_"+file.getOriginalFilename();
 			ArquivoEventoProcesso arquivo =  new ArquivoEventoProcesso(eventoProcesso, fileName, descricao, new Date(),
 					extensao, nomeOriginal, contentType, tamanho);
@@ -102,13 +98,13 @@ public class EventoProcessoResource {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@GetMapping("/{eventoProcessoId}/arquivos")
 	public ResponseEntity<List<Arquivo>> documentos(@PathVariable("eventoProcessoId") Integer eventoProcessoId){
 		List<Arquivo> arquivos =  arquivoEventoProcessoRepository.findByEventoProcesso_EventoProcessoId(eventoProcessoId);
 		return ResponseEntity.ok(arquivos);
 	}
-	
+
 	@PostMapping("/{eventoProcessoId}/adicionar-evento")
 	public ResponseEntity<EventoProcesso> adicionarEvento(@PathVariable("eventoProcessoId") Integer eventoProcessoId, @RequestBody EventoProcesso eventoProcesso){
 		EventoProcesso eventoPai = eventoProcessoRepository.findById(eventoProcessoId).orElse(null);
@@ -116,12 +112,15 @@ public class EventoProcessoResource {
 		EventoProcesso eventoSalvo = eventoProcessoRepository.save(eventoProcesso);
 		return ResponseEntity.ok(eventoSalvo);
 	}
-	
+
 	@GetMapping("/{eventoProcessoId}/eventos")
 	public ResponseEntity<List<EventoProcesso>> eventos(@PathVariable("eventoProcessoId") Integer eventoProcessoId){
 		List<EventoProcesso> eventos = eventoProcessoRepository.findByEventoProcesso_EventoProcessoId(eventoProcessoId);
 		return ResponseEntity.ok(eventos);
 	}
+
 	
+
+
 
 }

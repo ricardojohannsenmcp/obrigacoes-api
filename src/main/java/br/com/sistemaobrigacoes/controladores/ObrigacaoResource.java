@@ -39,16 +39,6 @@ public class ObrigacaoResource {
 	}
 	
 
-	
-	@GetMapping("/{obrigacaoId}")
-	public ResponseEntity<Obrigacao> editar(@PathVariable("obrigacaoId") Integer obrigacaoId) {
-		Obrigacao obrigacao = obrigacaoRepository.findById(obrigacaoId).orElse(null);
-		return ResponseEntity.ok(obrigacao);
-	}
-	
-	
-	
-	
 	@ResponseStatus(value=HttpStatus.OK)
 	@DeleteMapping("/{obrigacaoId}")
 	public void remover(@PathVariable("obrigacaoId") Integer obrigacaoId) {

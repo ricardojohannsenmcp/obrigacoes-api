@@ -28,9 +28,12 @@ import br.com.sistemaobrigacoes.modelo.Arquivo;
 import br.com.sistemaobrigacoes.modelo.ArquivoProcesso;
 import br.com.sistemaobrigacoes.modelo.EventoProcesso;
 import br.com.sistemaobrigacoes.modelo.Processo;
+import br.com.sistemaobrigacoes.modelo.Tarefa;
+import br.com.sistemaobrigacoes.modelo.TarefaProcesso;
 import br.com.sistemaobrigacoes.repositorios.ArquivoProcessoRepository;
 import br.com.sistemaobrigacoes.repositorios.EventoProcessoRepository;
 import br.com.sistemaobrigacoes.repositorios.ProcessoRepository;
+import br.com.sistemaobrigacoes.repositorios.TarefaProcessoRepository;
 
 @RestController
 @RequestMapping("/processos")
@@ -44,6 +47,9 @@ public class ProcessoResource {
 	
 	@Autowired
 	private EventoProcessoRepository eventoProcessoRepository;
+	
+	@Autowired
+	private TarefaProcessoRepository tarefaProcessoRepository;
 	
 	@PostMapping
 	public ResponseEntity<Processo> salvar(@RequestBody Processo processo) {
@@ -60,12 +66,6 @@ public class ProcessoResource {
 	public ResponseEntity<List<Processo>> lista(){
 		List<Processo> processos =  (List<Processo>) processoRepository.findAll();
 		return ResponseEntity.ok(processos);
-	}
-	
-	@GetMapping("/{processoId}")
-	public ResponseEntity<Processo> editar(@PathVariable("processoId") Integer processoId) {
-		Processo processo = processoRepository.findById(processoId).orElse(null);
-		return ResponseEntity.ok(processo);
 	}
 	
 	@ResponseStatus(value=HttpStatus.OK)
@@ -118,6 +118,20 @@ public class ProcessoResource {
 	public ResponseEntity<List<EventoProcesso>> eventos(@PathVariable("processoId") Integer processoId){
 		List<EventoProcesso> eventos = eventoProcessoRepository.findByProcesso_ProcessoId(processoId);
 		return ResponseEntity.ok(eventos);
+	}
+	
+	@PostMapping("/{processoId}/adicionar-tarefa")
+	public ResponseEntity<TarefaProcesso> adicionarTarefa(@PathVariable("processoId") Integer processoId, @RequestBody TarefaProcesso tarefaProcesso){
+		Processo processo = processoRepository.findById(processoId).orElse(null);
+		tarefaProcesso.setProcesso(processo);
+		TarefaProcesso tarefaSalva = tarefaProcessoRepository.save(tarefaProcesso);
+		return ResponseEntity.ok(tarefaSalva);
+	}
+
+	@GetMapping("/{processoId}/tarefas")
+	public ResponseEntity<List<Tarefa>> tarefas(@PathVariable("processoId") Integer processoId){
+		List<Tarefa> tarefas = tarefaProcessoRepository.findByProcesso_ProcessoId(processoId);
+		return ResponseEntity.ok(tarefas);
 	}
 	
 }
