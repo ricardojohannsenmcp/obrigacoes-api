@@ -26,7 +26,7 @@ public class UsuarioGrupo {
 	private Usuario usuario;
 	
 	@ManyToOne
-	@JoinColumn(name= "usuario_id")
+	@JoinColumn(name= "grupo_usuario_id")
 	private GrupoUsuario grupoUsuario;
 	
 	@ManyToOne

@@ -1,10 +1,10 @@
-insert into grupo_usuario(1,'Administrador');
-insert into grupo_usuario(2,'Coordenador');
-insert into grupo_usuario(3,'Contador');
+insert into grupo_usuario(grupo_usuario_id, nome) values (1,'Administrador');
+insert into grupo_usuario(grupo_usuario_id, nome) values(2,'Coordenador');
+insert into grupo_usuario(grupo_usuario_id, nome) values(3,'Contador');
 
 
-insert into permissao(1,'Módulo Processo');
-insert into permissao(2,'Módulo Obrigações');
+insert into permissao(permissao_id,descricao) values (1,'Módulo Processo');
+insert into permissao(permissao_id,descricao) values(2,'Módulo Obrigações');
 
 
 insert into grupo_permissao(grupo_usuario_id,permissao_id) values (1,1);
