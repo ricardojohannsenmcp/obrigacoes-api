@@ -3,6 +3,15 @@ insert into grupo_usuario(grupo_usuario_id, nome) values(2,'Coordenador');
 insert into grupo_usuario(grupo_usuario_id, nome) values(3,'Contador');
 
 
+insert into pessoa(pessoa_id,nome) values (1,'Ricardo Johannsen');
+insert into pessoa(pessoa_id,nome) values(2,'Ana Carolina');
+ 
+insert into usuario(usuario_id,pessoa_id,login,senha) values(1,1,'rjpereira','$2a$10$dcI7EGRUK/ocSFx9RsXjt.M6S5fV/kpcgVrtGyZzG1XyAEO.L3QU.');
+insert into usuario(usuario_id,pessoa_id,login,senha) values(2,2,'acbras','$2a$10$dcI7EGRUK/ocSFx9RsXjt.M6S5fV/kpcgVrtGyZzG1XyAEO.L3QU.');
+
+
+
+
 insert into permissao(permissao_id,descricao) values (1,'Módulo Processo');
 insert into permissao(permissao_id,descricao) values(2,'Módulo Obrigações');
 
@@ -72,6 +81,11 @@ insert into periodo (periodo_id,descricao,frequencia_id) values (24,'Exercício'
 
 
 insert into ente(ente_id,nome) values (2111300,'São Luís'),(2100055,'Açailândia'),(2102200,'Buriti');
+
+
+
+insert into usuario_grupo(usuario_grupo_id,usuario_id,grupo_usuario_id,ente_id,inativo) values(1,1,2,2100055,false);
+insert into usuario_grupo(usuario_grupo_id,usuario_id,grupo_usuario_id,ente_id,inativo) values(2,2,2,2111300,false);
 
 
 insert into sistema (sistema_id,nome) values (1,'PGFN/RFB');

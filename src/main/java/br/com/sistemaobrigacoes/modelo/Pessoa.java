@@ -3,6 +3,7 @@ package br.com.sistemaobrigacoes.modelo;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,9 +22,9 @@ public class Pessoa {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="pessoa_id")
 	private Integer pessoaId;
 	
-
 	private String nome;
 	
     @ElementCollection(fetch = FetchType.LAZY)
