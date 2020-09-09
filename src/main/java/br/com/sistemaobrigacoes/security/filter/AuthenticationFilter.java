@@ -30,25 +30,25 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
 			throws ServletException, IOException {
 		String token =  recuperarToken(req);	
-		System.out.println("token recuperado");
+		//System.out.println("token recuperado");
 		boolean valido =  tokenService.isValido(token);
 		if(valido) {
-			System.out.println("token é válido");
+			//System.out.println("token é válido");
 			autenticarCliente(token);
 		}
 		chain.doFilter(req, resp);
 	}
 	
 	private void autenticarCliente(String token) {
-		System.out.println("token recebido: "+token);
+		//System.out.println("token recebido: "+token);
 		Integer idUsuario = tokenService.getIdUsuario(token);
-		System.out.println("id usuario: "+idUsuario);
+		//System.out.println("id usuario: "+idUsuario);
 		//essa busca é desnecessária,basta recuperar a claim referente ao usuário
 		//a claim está em formato json, usar objectmapper e converter em usuário
 		Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 		Usuario usuario = null;
 		if(optional.isPresent()) {
-			System.out.println("usuário presente");
+			//System.out.println("usuário presente");
 			usuario =  optional.get();
 		}
 		UsernamePasswordAuthenticationToken  authentication =  new 

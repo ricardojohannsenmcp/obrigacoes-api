@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers("/autenticacao").permitAll()
 		.antMatchers("/h2-console").permitAll()
+		.antMatchers("/actuator/**").permitAll()
 		.anyRequest().authenticated()
 		.and().cors()
 		.and().csrf().disable()
@@ -57,9 +58,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.addFilterBefore(new AuthenticationFilter(tokenService,usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 	}
 	
+
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		super.configure(web);
+	    web.ignoring()
+	        .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
 	}
 	
 	
