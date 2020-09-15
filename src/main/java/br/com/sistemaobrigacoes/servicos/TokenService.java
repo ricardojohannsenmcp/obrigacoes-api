@@ -16,9 +16,9 @@ public class TokenService {
 	public String gerarToken(Authentication authenticate){
 		Usuario logado = (Usuario) authenticate.getPrincipal();
 		Date hoje =  new Date();
-		Date dataExpiracao = new Date(hoje.getTime() + 50000);
+		Date dataExpiracao = new Date(hoje.getTime() + 1800000);
 		return Jwts.builder()
-				.setIssuer("nome da aplicacao")
+				.setIssuer("painel-de-prazos")
 				.setSubject(logado.getUsuarioId().toString())
 				.claim("usuario",logado )
 				.setIssuedAt(hoje)

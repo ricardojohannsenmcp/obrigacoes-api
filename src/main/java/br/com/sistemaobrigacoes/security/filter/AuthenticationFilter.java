@@ -1,6 +1,7 @@
 package br.com.sistemaobrigacoes.security.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Optional;
 
 import javax.servlet.FilterChain;
@@ -29,11 +30,16 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
 			throws ServletException, IOException {
+		
+		Enumeration<String> headerNames = req.getHeaderNames();
+		
+		
+	
 		String token =  recuperarToken(req);	
 		//System.out.println("token recuperado");
 		boolean valido =  tokenService.isValido(token);
 		if(valido) {
-			//System.out.println("token é válido");
+			System.out.println("token é válido");
 			autenticarCliente(token);
 		}
 		chain.doFilter(req, resp);
