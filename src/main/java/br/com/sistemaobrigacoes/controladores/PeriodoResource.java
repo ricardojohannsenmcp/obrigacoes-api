@@ -19,17 +19,20 @@ public class PeriodoResource {
 
 	@GetMapping
 	public ResponseEntity<Iterable<Periodo>> lista(){
-
 		return ResponseEntity.ok(periodoRepository.findAll());
+	
 	}
 
 	@GetMapping("/{periodoId}")
 	public ResponseEntity<Periodo> find(@PathVariable("periodoId") Integer periodoId){
-
 		return ResponseEntity.ok(periodoRepository.findById(periodoId).orElse(null));
+	
 	}
 
-
-
+	@GetMapping("frequencia/{periodoId}")
+	public ResponseEntity<List<Periodo>> findByFrequencia(@PathVariable("frequenciaId") Integer frequenciaId){
+		return ResponseEntity.ok(periodoRepository.findByFrequenciaId(frequenciaId).orElse(null));
+	
+	}
 
 }

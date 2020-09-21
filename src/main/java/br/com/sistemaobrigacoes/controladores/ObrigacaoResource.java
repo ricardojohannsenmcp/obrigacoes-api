@@ -20,24 +20,24 @@ import br.com.sistemaobrigacoes.repositorios.ObrigacaoRepository;
 @RequestMapping("/obrigacoes")
 public class ObrigacaoResource {
 	
-	
 	@Autowired
 	private ObrigacaoRepository obrigacaoRepository;
 	
-	
-
 	@GetMapping
 	public ResponseEntity<Iterable<Obrigacao>> lista(){
-
 		return ResponseEntity.ok(obrigacaoRepository.findAll());
 	}
 
 	@GetMapping("/{obrigacaoId}")
 	public ResponseEntity<Obrigacao> find(@PathVariable("obrigacaoId") Integer obrigacaoId){
-
 		return ResponseEntity.ok(obrigacaoRepository.findById(obrigacaoId).orElse(null));
 	}
 	
+	@PostMapping
+	public ResponseEntity<Obrigacao> find(@RequestBody Obrigacao obrigacao){
+		Obrigacao obrigacaoSalva = obrigacaoRepository.save(obrigacao);
+		return ResponseEntity.ok(obrigacao);
+	}
 
 	@ResponseStatus(value=HttpStatus.OK)
 	@DeleteMapping("/{obrigacaoId}")
@@ -45,8 +45,6 @@ public class ObrigacaoResource {
 		obrigacaoRepository.deleteById(obrigacaoId);
 	}
 	
-	
-
 	@ResponseStatus(value=HttpStatus.OK)
 	@PutMapping("/{obrigacaoId}")
 	public void atualizar(@PathVariable("obrigacaoId") Integer obrigacaoId,@RequestBody Obrigacao obrigacao) {

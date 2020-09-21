@@ -42,8 +42,8 @@ public class RemessaResource {
 	
 	@PostMapping
 	public ResponseEntity<Remessa> salvar(@RequestBody Remessa remessa) {
-		remessa =  remessaRepository.save(remessa);
-		return ResponseEntity.ok(remessa);
+		Remessa remessaSalva = remessaRepository.save(remessa);
+		return ResponseEntity.ok(remessaSalva);
 	}
 	
 	@GetMapping("/{remessaId}")
@@ -54,6 +54,12 @@ public class RemessaResource {
 	@GetMapping
 	public ResponseEntity<List<Remessa>> lista(){
 		List<Remessa> remessas =  (List<Remessa>) remessaRepository.findAll();
+		return ResponseEntity.ok(remessas);
+	}
+
+	@GetMapping("/filtro")
+	public ResponseEntity<List<Remessa>> lista(@RequestBody FiltroRemessa filtro){
+		List<Remessa> remessas =  (List<Remessa>) remessaRepository.findyFiltro(filtro);
 		return ResponseEntity.ok(remessas);
 	}
 	
