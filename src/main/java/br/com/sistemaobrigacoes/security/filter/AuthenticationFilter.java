@@ -1,7 +1,6 @@
 package br.com.sistemaobrigacoes.security.filter;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Optional;
 
 import javax.servlet.FilterChain;
@@ -18,10 +17,11 @@ import br.com.sistemaobrigacoes.repositorios.UsuarioRepository;
 import br.com.sistemaobrigacoes.servicos.TokenService;
 
 public class AuthenticationFilter extends OncePerRequestFilter{
-	
+
 	private TokenService tokenService;
+
 	private UsuarioRepository usuarioRepository;
-	
+
 	public AuthenticationFilter(TokenService tokenService,UsuarioRepository usuarioRepository) {
 		this.tokenService = tokenService;
 		this.usuarioRepository =  usuarioRepository;
@@ -30,31 +30,19 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
 			throws ServletException, IOException {
-		
-		Enumeration<String> headerNames = req.getHeaderNames();
-		
-		
-	
 		String token =  recuperarToken(req);	
-		//System.out.println("token recuperado");
 		boolean valido =  tokenService.isValido(token);
 		if(valido) {
-			System.out.println("token é válido");
 			autenticarCliente(token);
 		}
 		chain.doFilter(req, resp);
 	}
-	
+
 	private void autenticarCliente(String token) {
-		//System.out.println("token recebido: "+token);
 		Integer idUsuario = tokenService.getIdUsuario(token);
-		//System.out.println("id usuario: "+idUsuario);
-		//essa busca é desnecessária,basta recuperar a claim referente ao usuário
-		//a claim está em formato json, usar objectmapper e converter em usuário
 		Optional<Usuario> optional = usuarioRepository.findById(idUsuario);
 		Usuario usuario = null;
 		if(optional.isPresent()) {
-			//System.out.println("usuário presente");
 			usuario =  optional.get();
 		}
 		UsernamePasswordAuthenticationToken  authentication =  new 

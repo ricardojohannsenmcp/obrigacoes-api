@@ -2,20 +2,43 @@ package br.com.sistemaobrigacoes.modelo;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+
+@NamedEntityGraph(
+		  name = "grafo-usuario-com-grupos",
+		  attributeNodes = {
+				  @NamedAttributeNode("pessoa"),
+		    @NamedAttributeNode(value = "usuarioGrupos", subgraph = "usuariogrupo-subgrafo")
+		  },
+		  subgraphs = {
+		    @NamedSubgraph(
+		      name = "usuariogrupo-subgrafo",
+		      attributeNodes = {
+		        @NamedAttributeNode("ente"),
+		        @NamedAttributeNode("grupoUsuario")
+		      }
+		    )
+		  }
+		)
 
 @Entity
 @Table(name="usuario")
@@ -29,23 +52,21 @@ public class Usuario  implements UserDetails{
 	@Column(name="usuario_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer usuarioId;
-	
-	@ManyToOne
-	@JoinColumn(name="tipo_usuario_id")
-	private GrupoUsuario tipoUsuario;
-	
-	@ManyToOne
-	@JoinColumn(name="ente")
-	private Ente ente;
-	
+
     @OneToOne
     @JoinColumn(name="pessoa_id")
 	private Pessoa pessoa;
 	
 	private String login;
 	
+	@JsonIgnore
 	private String senha;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.REMOVE,orphanRemoval=true)
+	private Collection<UsuarioGrupo> usuarioGrupos;
 
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

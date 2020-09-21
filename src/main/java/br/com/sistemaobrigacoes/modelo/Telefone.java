@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 public class Telefone {
 	
-	
-	
 	private String numero;
+	
 	private boolean principal;
+	
 	@Enumerated(EnumType.STRING)
 	private TipoTelefone tipoTelefone;
 	

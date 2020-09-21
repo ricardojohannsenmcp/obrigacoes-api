@@ -46,7 +46,6 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoas);
 	}
 
-	
 	@ResponseStatus(value=HttpStatus.OK)
 	@DeleteMapping("/{pessoaId}")
 	public void remover(@PathVariable("pessoaId") Integer pessoaId) {

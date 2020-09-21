@@ -24,6 +24,10 @@ public class Remessa {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="remessa_id")
 	private Integer remessaId;
+	
+	@ManyToOne
+	@JoinColumn(name="ente_id")
+	private Ente ente;
 
 	@ManyToOne
 	@JoinColumn(name="obrigacao_id")

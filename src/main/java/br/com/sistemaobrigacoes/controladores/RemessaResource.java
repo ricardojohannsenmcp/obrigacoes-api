@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.sistemaobrigacoes.form.RemessaForm;
 import br.com.sistemaobrigacoes.modelo.Arquivo;
 import br.com.sistemaobrigacoes.modelo.ArquivoRemessa;
 import br.com.sistemaobrigacoes.modelo.Remessa;
 import br.com.sistemaobrigacoes.repositorios.ArquivoRemessaRepository;
 import br.com.sistemaobrigacoes.repositorios.RemessaRepository;
+import br.com.sistemaobrigacoes.servicos.RemessaService;
 
 @RestController
 @RequestMapping("/remessas")
@@ -40,10 +44,19 @@ public class RemessaResource {
 	@Autowired
 	private ArquivoRemessaRepository arquivoRemessaRepository;
 	
+	@Autowired
+	private RemessaService remessaService;
+	
 	@PostMapping
 	public ResponseEntity<Remessa> salvar(@RequestBody Remessa remessa) {
 		remessa =  remessaRepository.save(remessa);
 		return ResponseEntity.ok(remessa);
+	}
+	
+	@PostMapping("/cadastrar")
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid RemessaForm form) {
+		remessaService.cadastrar(form);
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/{remessaId}")

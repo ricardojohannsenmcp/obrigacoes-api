@@ -23,12 +23,13 @@ public class TokenService {
 				.claim("usuario",logado )
 				.setIssuedAt(hoje)
 				.setExpiration(dataExpiracao)
-				.signWith(SignatureAlgorithm.HS256, "x1b1c4").compact();
+				.signWith(SignatureAlgorithm.HS256, "p@1nel-pr4z02").compact();
 	}
 
 	public boolean isValido(String token) {
 		try {
-			Jws<Claims> claims = Jwts.parser().setSigningKey("x1b1c4").parseClaimsJws(token);
+			@SuppressWarnings("unused")
+			Jws<Claims> claims = Jwts.parser().setSigningKey("p@1nel-pr4z02").parseClaimsJws(token);
 			return true;
 		}catch(Exception e) {
 			return false;
@@ -36,7 +37,7 @@ public class TokenService {
 	}
 
 	public Integer getIdUsuario(String token) {
-		Claims claims = Jwts.parser().setSigningKey("x1b1c4").parseClaimsJws(token).getBody();
+		Claims claims = Jwts.parser().setSigningKey("p@1nel-pr4z02").parseClaimsJws(token).getBody();
 		return Integer.parseInt(claims.getSubject());
 	}
 

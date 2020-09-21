@@ -18,13 +18,13 @@ import br.com.sistemaobrigacoes.servicos.TokenService;
 @RestController
 @RequestMapping("/autenticacao")
 public class AutenticacaoResource {
-	
+
 	@Autowired
 	private AuthenticationManager authManager;
-	
+
 	@Autowired
 	private TokenService tokenService;
-	
+
 	@PostMapping
 	public ResponseEntity<TokenDto> logar(@RequestBody LoginForm form){
 		try {

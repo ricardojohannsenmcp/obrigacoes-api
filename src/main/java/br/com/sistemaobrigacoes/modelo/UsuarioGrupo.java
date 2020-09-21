@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+
 @Entity
 @Table(name="usuario_grupo")
 @Data
