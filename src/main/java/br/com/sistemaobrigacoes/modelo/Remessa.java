@@ -38,4 +38,6 @@ public class Remessa {
 	@Temporal(TemporalType.DATE)
 	private Date prazo;
 
+
+
 }
